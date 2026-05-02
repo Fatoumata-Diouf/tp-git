@@ -20,6 +20,10 @@ public class UserServiceImplementation implements IUser {
 
     @Override
     public UserResponse save(UserRequest userRequest) {
+        // Validation dde l'email  — correction du bug
+        if (!userRequest.getEmail().contains("@")) {
+            throw new RuntimeException("L'email n'est pas valide");
+        }
         User user = UserMapper.toEntity(userRequest);
         return UserMapper.toDto(userRepository.save(user));
     }
